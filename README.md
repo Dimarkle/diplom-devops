@@ -350,11 +350,14 @@ diman@Diman:~/diplom/terraform$ yc config list
 
 
 
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/05aa9110-e340-4ba6-a237-74110abd96f9)
 
 
 
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f93d1c57-81db-4d74-85b2-d24f104673f4)
 
 
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f57f9be3-4094-4064-8486-150be48c9fc9)
 
 
 
