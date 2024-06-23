@@ -105,7 +105,7 @@ all:
       hosts: {}
   EOF2
   filename = "../ansible/inventory-kubespray"
-  depends_on = [yandex_compute_instance.master, yandex_compute_instance.worker-1, yandex_compute_instance.worker-2, yandex_compute_instance.worker-3]
+  depends_on = [yandex_compute_instance.master, yandex_compute_instance.worker-1, yandex_compute_instance.worker-2, yandex_compute_instance.worker-3]  
 }
 
 ```
@@ -114,35 +114,13 @@ all:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Развертывание Kubernetes кластера с помощью Kubespray
+*Запустим  [ansible-playbook](https://github.com/Dimarkle/diplom-devops/blob/main/ansible/playbook.yml), выполняющий подготовку узлов для установки Kubernetes методом Kubespray:*
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/5f91963b-f597-4e63-852c-661874bb8028)
+___
 
-
-
-Ansible-playbook отработал корректно. Далее скопируем закрытый ключ и сформированный inventory-kubespray с локальной машины на мастер-ноду
+*Копируем закрытый ключ и сформированный inventory-kubespray с локальной машины на мастер-ноду*
 
 
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/2d13a2a4-8f4b-4900-8314-662e1a4eca32)
