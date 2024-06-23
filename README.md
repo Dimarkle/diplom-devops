@@ -459,6 +459,9 @@ spec:
 ```
 
 </details>
+
+
+
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/5acc2858-44dd-45a8-861a-5be377b0c961)
 ___
