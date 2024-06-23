@@ -1,0 +1,25 @@
+---
+- name: prep
+  hosts: kube-cloud
+  become: true
+  tasks:
+    - name: packages-update
+      apt:
+        update_cache: yes
+
+    - name: Install packages
+      apt:
+        name:
+          - git
+          - python3-pip
+        state: present
+
+    - name: clone Kubespray repo
+      git:
+        repo: https://github.com/kubernetes-sigs/kubespray.git
+        dest: ~/kubespray
+
+    - name: Install requirements
+      pip:
+        requirements: ~/kubespray/requirements.txt
+
