@@ -414,6 +414,7 @@ ___
 
 # Развертывание kube-prometheus на Kubernetes кластере: 
 Создадим файл ```deployment.yaml```
+
 <details>
 <summary>deployment.yaml</summary>
 
@@ -500,13 +501,36 @@ ___
 ___
 **GitHub Actions создает и загружает образ пользовательского web-приложения в Docker Hub при выполнении коммита.**
 
+# Подготовка GitHub для развертывания приложения в Kubernetes кластере:
 
+*Добавим секрет ```KUBECONFIG_FILE``` в Github Actions:*
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f579d243-101e-4f89-b721-fd75476648d1)
+___
+*Создадим файл [deploy.yml.](https://github.com/Dimarkle/nginx/blob/main/.github/workflows/deploy.yml)*
 
+*Изменим файл веб-приложения index.html в репозитории и отправим изменения в GitHub, а также присвоим новый тег:*
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/05aa9110-e340-4ba6-a237-74110abd96f9)
+___
+Ошибок нет.
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f93d1c57-81db-4d74-85b2-d24f104673f4)
+___
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f57f9be3-4094-4064-8486-150be48c9fc9)
+___
 
-# Подготовка GitHub для развертывания приложения в Kubernetes кластере
+*Я экспериментировал и добрался до версии [v8.8](https://github.com/Dimarkle/nginx/actions)*
 
+# Автоматический запуск и применение конфигурации terraform из git-репозитория в выбранной CI-CD системе при любом комите в main ветку:
 
+Создадим отдельный [репозиторий](https://github.com/Dimarkle/atlantis)
 
+*Создаем секреты Github Actions. Для этого  нам понадобиться создание статических ключей доступа и авторизованный ключ для сервисного аккаунта*
+
+<details>
+<summary>deployment.yaml</summary>
 
 
 ```
@@ -515,26 +539,20 @@ id: *****************
 service_account_id:  *****************h
 created_at: "2024-06-22T15:27:16.073806810Z"
 key_algorithm: RSA_2048
-```
-```
 diman@Diman:~/diplom/terraform$ yc config set service-account-key key.json
 diman@Diman:~/diplom/terraform$ yc config list
 ```
 
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/724acbea-964b-4478-a6f8-c7f51281744c)
+</details>
+
+
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/bd7cc63c-1806-4772-a2a2-c04b72a6bd0c)
+___
 
 
 
 
-
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/05aa9110-e340-4ba6-a237-74110abd96f9)
-
-
-
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f93d1c57-81db-4d74-85b2-d24f104673f4)
-
-
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f57f9be3-4094-4064-8486-150be48c9fc9)
 
 
 
