@@ -328,17 +328,59 @@ ubuntu@master:~/kube-prometheus$
 
 
 
-Проверка:
-
-
-
+*Проверка:*
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/489eaaaa-3d9f-40c1-805e-b4f2bc7ac815)
+___
+Для доступа к интерфейсу изменим сетевую политику, для этого создадим ```grafana-service.yml````:
+
+<details>
+<summary>Установка Kube-prometheus</summary>
+
+
+```
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: grafana-service
+  name: grafana
+  namespace: monitoring
+spec:
+  type: NodePort
+  ports:
+  - name: grafana-port
+    port: 3000
+    targetPort: 3000
+    nodePort: 30001
+  selector:
+    app.kubernetes.io/component: grafana
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/part-of: kube-prometheus
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: grafana
+spec:
+  podSelector:
+    matchLabels:
+      app: grafana
+  ingress:
+  - {}
+```
+
+</details>
 
 
 
 
 
-Для доступа к интерфейсу изменим сетевую политику:
+
+
 
 
 
