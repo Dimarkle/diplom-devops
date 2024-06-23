@@ -1,9 +1,121 @@
-# diplom-devops
+# Диплом
+# Оглавление:
+
+  * [Цели:](#цели)
+  * [Этапы выполнения:](#этапы-выполнения)
+     * [Создание облачной инфраструктуры](#создание-облачной-инфраструктуры)
+     * [Создание Kubernetes кластера](#создание-kubernetes-кластера)
+     * [Создание тестового приложения](#создание-тестового-приложения)
+     * [Подготовка cистемы мониторинга и деплой приложения](#подготовка-cистемы-мониторинга-и-деплой-приложения)
+     * [Установка и настройка CI/CD](#установка-и-настройка-cicd)
+  * [Что необходимо для сдачи задания?](#что-необходимо-для-сдачи-задания)
+  * [Как правильно задавать вопросы дипломному руководителю?](#как-правильно-задавать-вопросы-дипломному-руководителю)
 
 
+Дипломное  задание доступно по [ссылке.](https://github.com/netology-code/devops-diplom-yandexcloud) 
 
-
+# Решение:
+# Создание облачной инфраструктуры: 
+* Подготовим облачную инфраструктуру в Yandex Cloud при помощи [Terraform](https://github.com/Dimarkle/diplom-devops/tree/main/terraform) без дополнительных ручных действий:
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/1c368806-1d11-4cfc-bfe4-5b450a38ea45)
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/35f08be5-2267-4868-8853-454ad6bdae48)
+___
+* В файле [baket.tf](https://github.com/Dimarkle/diplom-devops/blob/main/terraform/baket.tf) создаем сервисный аккаунт и S3-bucket. Все работает:
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/68c9e33e-6d97-4792-ad0d-609a5556bcc4)
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/7dc33ee2-34b0-40b8-8ca7-fb685c5a59e0)
+___
+* В файле [main.tf](https://github.com/Dimarkle/diplom-devops/blob/main/terraform/main.tf) создаем VPC с подсетями, сами виртуальные машинки Compute Cloud в разных зонах доступности. Машинки созданы корректно:
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f3013c82-cb1d-4d8c-8e9e-4448c1632bc1)
+___
+# Подготовка ansible-конфигурации Kubespray:
+## Формируем:
+
+*  [ansible-playbook](https://github.com/Dimarkle/diplom-devops/blob/main/ansible/playbook.yml), с его помощью осуществим подготовку узлов для установки Kubernetes методом Kubespray;
+
+* [inventory-файл](https://github.com/Dimarkle/diplom-devops/blob/main/ansible/inventory-preparation) для предварительного ansible-playbook. Формируем его с помощью terraform. В файле [main.tf](https://github.com/Dimarkle/diplom-devops/blob/main/terraform/main.tf) за это отвечает следующий блок:
+
+
+<details>
+<summary>Inventory-файл</summary>
+```        
+resource "local_file" "inventory-preparation" {
+  content = <<EOF1
+[kube-cloud]
+${yandex_compute_instance.master.network_interface.0.nat_ip_address}
+${yandex_compute_instance.worker-1.network_interface.0.nat_ip_address}
+${yandex_compute_instance.worker-2.network_interface.0.nat_ip_address}
+${yandex_compute_instance.worker-3.network_interface.0.nat_ip_address}
+  EOF1
+  filename = "../ansible/inventory-preparation"
+  depends_on = [yandex_compute_instance.master, yandex_compute_instance.worker-1, yandex_compute_instance.worker-2, yandex_compute_instance.worker-3]
+}
+```                     
+</details>
+          
+
+
+* Комплексный [inventory-файл](https://github.com/Dimarkle/diplom-devops/blob/main/ansible/inventory-kubespray) для отработки инструмента Kubespray также формируем с помощью terraform.  В файле [main.tf](https://github.com/Dimarkle/diplom-devops/blob/main/terraform/main.tf) следующий блок:
+
+
+
+<details>
+<summary>Подробнее ...</summary>
+resource "local_file" "inventory-kubespray" {
+  content = <<EOF2
+all:
+  hosts:
+    ${yandex_compute_instance.master.fqdn}:
+      ansible_host: ${yandex_compute_instance.master.network_interface.0.ip_address}
+      ip: ${yandex_compute_instance.master.network_interface.0.ip_address}
+      access_ip: ${yandex_compute_instance.master.network_interface.0.ip_address}
+    ${yandex_compute_instance.worker-1.fqdn}:
+      ansible_host: ${yandex_compute_instance.worker-1.network_interface.0.ip_address}
+      ip: ${yandex_compute_instance.worker-1.network_interface.0.ip_address}
+      access_ip: ${yandex_compute_instance.worker-1.network_interface.0.ip_address}
+    ${yandex_compute_instance.worker-2.fqdn}:
+      ansible_host: ${yandex_compute_instance.worker-2.network_interface.0.ip_address}
+      ip: ${yandex_compute_instance.worker-2.network_interface.0.ip_address}
+      access_ip: ${yandex_compute_instance.worker-2.network_interface.0.ip_address}
+    ${yandex_compute_instance.worker-3.fqdn}:
+      ansible_host: ${yandex_compute_instance.worker-3.network_interface.0.ip_address}
+      ip: ${yandex_compute_instance.worker-3.network_interface.0.ip_address}
+      access_ip: ${yandex_compute_instance.worker-3.network_interface.0.ip_address}
+  children:
+    kube_control_plane:
+      hosts:
+        ${yandex_compute_instance.master.fqdn}:
+    kube_node:
+      hosts:
+        ${yandex_compute_instance.worker-1.fqdn}:
+        ${yandex_compute_instance.worker-2.fqdn}:
+        ${yandex_compute_instance.worker-3.fqdn}:
+    etcd:
+      hosts:
+        ${yandex_compute_instance.master.fqdn}:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
+  EOF2
+  filename = "../ansible/inventory-kubespray"
+  depends_on = [yandex_compute_instance.master, yandex_compute_instance.worker-1, yandex_compute_instance.worker-2, yandex_compute_instance.worker-3]
+}
+</details>
+
+
+
+
+
+
+
+
 
 
 
