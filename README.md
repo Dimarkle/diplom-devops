@@ -120,18 +120,12 @@ ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/5f91963b-f597-4e63-852c-661874bb8028)
 ___
 
-*Копируем закрытый ключ и сформированный inventory-kubespray с локальной машины на мастер-ноду*
-
-
+*Копируем закрытый ключ и сформированный [inventory-kubespray](https://github.com/Dimarkle/diplom-devops/blob/main/ansible/inventory-kubespray) с локальной машины на мастер-ноду:*
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/2d13a2a4-8f4b-4900-8314-662e1a4eca32)
-
-
-
-
-С мастер-ноды запустим развертывание Kubernetes методом Kubespray:
-
-
-
+___
+*С мастер-ноды запустим развертывание Kubernetes методом Kubespray:*
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/1d772ea2-246b-40e8-8ba9-71349d1b0ab0)
 
 
@@ -139,25 +133,25 @@ ___
 
 
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6e385f30-1306-46d9-9faf-9db2027dfeb3)
+___
 
 
-
-Результат работы kubectl, отрабатывает без ошибок:
-
-
+**Результат работы kubectl:**
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/77acb492-17bb-4dad-b3d8-d4aefad0d31b)
-
-
-
-
-Отредактировал kubectl config:
-
-
+___
+*Отредактировал kubectl config,понадобиться нам в будущем, для формирования секрета в actions github:*
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/69c4a975-3f7c-418c-8cc2-1f8ac533bdb8)
+___
+
+#  Kube-prometheus:
+**Для развертывания будем использовать [kube-prometheus:](https://github.com/prometheus-operator/kube-prometheus)**
 
 
+<details>
+<summary>Установка Kube-prometheus</summary>
 
-kube-prometheus
 
 ```
 ubuntu@master:~$ git clone https://github.com/prometheus-operator/kube-prometheus.git
@@ -329,6 +323,9 @@ serviceaccount/prometheus-operator created
 servicemonitor.monitoring.coreos.com/prometheus-operator created
 ubuntu@master:~/kube-prometheus$ 
 ```
+
+</details>
+
 
 
 Проверка:
