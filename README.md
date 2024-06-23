@@ -140,7 +140,7 @@ ___
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/77acb492-17bb-4dad-b3d8-d4aefad0d31b)
 ___
-*Отредактировал kubectl config,понадобиться нам в будущем, для формирования секрета в actions github:*
+*Отредактировал kubectl config,понадобиться нам в будущем, для формирования секрета в Github Actions:*
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/69c4a975-3f7c-418c-8cc2-1f8ac533bdb8)
 ___
@@ -394,7 +394,7 @@ ___
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/d69bb3af-0636-4d4f-9c61-4ff70af1725e)
 ___
-Также создадим [репу](https://hub.docker.com/repository/docker/dima2885/diplom/general) в docker hub:
+Также создадим [репу](https://hub.docker.com/repository/docker/dima2885/diplom/general) в Docker Hub:
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f124b48b-5e3f-4a5d-8258-94e0b1e024ab)
 ___
@@ -403,76 +403,97 @@ ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6eaa6216-6c07-4e74-962b-31950ae239f2)
 ____
 
-Отправим созданный образ на DockerHub:
+Отправим созданный образ на Docker Hub:
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/92564487-e746-4569-8a8e-9e36749bfc3c)
 ___
-
-
 Проверяем:
-
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/484ce855-2d46-4f95-bc74-2e382b4a1522)
+___
+
+# Развертывание kube-prometheus на Kubernetes кластере: 
+Создадим файл ```deployment.yaml```
+<details>
+<summary>deployment.yaml</summary>
 
 
+```
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-diplom
+  labels:
+    app: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp-diplom
+        image: dima2885/diplom
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+spec:
+  type: NodePort
+  selector:
+    app: webapp
+  ports:
+  - protocol: TCP
+    port: 80
+    nodePort: 30002
+
+```
+
+</details>
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/5acc2858-44dd-45a8-861a-5be377b0c961)
-
-
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6c38cfb2-3b5b-414a-a7a5-40ce6d89630e)
-
-Проверка
-
+___
+**Проверка:**
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6f7ae294-b4a2-45b8-9996-5e4f9fbc05f5)
+____
+# Подготовка системы мониторинга и деплой приложения:
 
-
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/5acc2858-44dd-45a8-861a-5be377b0c961)
-
-
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6c38cfb2-3b5b-414a-a7a5-40ce6d89630e)
-
-Проверка
-
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6f7ae294-b4a2-45b8-9996-5e4f9fbc05f5)
-
-
-
-# Подготовка системы мониторинга и деплой приложения
-
-
-
-Создаем секреты:
-
-
+*Создаем секреты Github Actions:*
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/a75187bf-50af-4746-97ed-5e824e56f02d)
+___
 
-
-
-Создаем файл Image.yml
-
-
+Создаем файл [Image.yml](https://github.com/Dimarkle/nginx/blob/main/.github/workflows/image.yml). И редактируем [index.html](https://github.com/Dimarkle/nginx/blob/main/index.html)
 Версия 1.1:
-
-
+____
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/8ca532ec-1eae-419b-8569-769e725a9c88)
-
-
+___
 Ошибок нет:
-
-
-
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/07f84a82-637e-43cb-9fb2-df3501dd5da4)
-
-
-doker:
-
-
+___
+Docker Hub:
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/3cca91a9-224c-42b9-a58d-949bdb5ff76f)
+___
+**GitHub Actions создает и загружает образ пользовательского web-приложения в Docker Hub при выполнении коммита.**
 
 
 
 
-
-
-
+# Подготовка GitHub для развертывания приложения в Kubernetes кластере
 
 
 
