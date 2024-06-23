@@ -3,11 +3,15 @@
 
   * [Создание облачной инфраструктуры:](#1)
   * [Подготовка ansible-конфигурации Kubespray:](#2)
+  * [Развертывание Kubernetes кластера с помощью Kubespray:](#3)
+  * [Kube-prometheus:](#4)
+  * [Создание тестового приложения:](#5)
+  * [Развертывание kube-prometheus на Kubernetes кластере:](#6)
+  * [Подготовка системы мониторинга и деплой приложения:](#7)
+  * [Подготовка GitHub для развертывания приложения в Kubernetes кластере:](#8)
+  * [Автоматический запуск и применение конфигурации terraform из Github Actions при любом комите в main ветк:](#9)
 
-  * [Как правильно задавать вопросы дипломному руководителю?](#как-правильно-задавать-вопросы-дипломному-руководителю)
-
-
-**Дипломное  задание доступно по [ссылке.](https://github.com/netology-code/devops-diplom-yandexcloud)**
+ **Дипломное  задание доступно по [ссылке.](https://github.com/netology-code/devops-diplom-yandexcloud)**
 
 # Решение:
 <a id="1"></a>
@@ -110,7 +114,7 @@ all:
 </details>
 
 
-
+<a id="3"></a>
 # Развертывание Kubernetes кластера с помощью Kubespray
 *Запустим  [ansible-playbook](https://github.com/Dimarkle/diplom-devops/blob/main/ansible/playbook.yml), выполняющий подготовку узлов для установки Kubernetes методом Kubespray:*
 ___
@@ -141,7 +145,7 @@ ___
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/69c4a975-3f7c-418c-8cc2-1f8ac533bdb8)
 ___
-
+<a id="4"></a>
 #  Kube-prometheus:
 **Для развертывания будем использовать [kube-prometheus:](https://github.com/prometheus-operator/kube-prometheus)**
 
@@ -386,6 +390,7 @@ ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/3e7edae0-acb6-45fd-be50-4f98f16f14da)
 ___
 *Пароль и логин по умолчанию*
+<a id="5"></a>
 # Создание тестового приложения
 Создадим [репу](https://github.com/Dimarkle/nginx) в github. Скачаем его на локальную машину и заполним его  файлами, необходимыми для создания  Dockerfile.        Создадим  версию  нашего приложения v1.0 .
 ___
@@ -408,7 +413,7 @@ ___
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/484ce855-2d46-4f95-bc74-2e382b4a1522)
 ___
-
+<a id="6"></a>
 # Развертывание kube-prometheus на Kubernetes кластере: 
 Создадим файл ```deployment.yaml```
 
@@ -475,7 +480,7 @@ ____
 * [worker-2](http://158.160.80.152:30002/)
 * [worker-3](http://158.160.144.193:30002/)
 
-
+<a id="7"></a>
 # Подготовка системы мониторинга и деплой приложения:
 
 *Создаем секреты Github Actions:*
@@ -498,6 +503,7 @@ ___
 ___
 **GitHub Actions создает и загружает образ пользовательского web-приложения в Docker Hub при выполнении коммита.**
 
+<a id="8"></a>
 # Подготовка GitHub для развертывания приложения в Kubernetes кластере:
 
 *Добавим секрет ```KUBECONFIG_FILE``` в Github Actions:*
@@ -523,7 +529,7 @@ ___
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/0f1e1f55-333c-4a32-a828-d0c2eece06d7)
 ___
-
+<a id="9"></a>
 # Автоматический запуск и применение конфигурации terraform из Github Actions при любом комите в main ветку:
 
 Создадим отдельный [репозиторий](https://github.com/Dimarkle/atlantis)
