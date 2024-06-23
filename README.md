@@ -10,6 +10,7 @@
 **Дипломное  задание доступно по [ссылке.](https://github.com/netology-code/devops-diplom-yandexcloud)**
 
 # Решение:
+<a id="1"></a>
 # Создание облачной инфраструктуры: 
 * Подготовим облачную инфраструктуру в Yandex Cloud при помощи [Terraform](https://github.com/Dimarkle/diplom-devops/tree/main/terraform) без дополнительных ручных действий:
 ___
@@ -27,6 +28,7 @@ ___
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f3013c82-cb1d-4d8c-8e9e-4448c1632bc1)
 ___
+<a id="2"></a>
 # Подготовка ansible-конфигурации Kubespray:
 ## Формируем:
 
