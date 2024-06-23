@@ -332,10 +332,10 @@ ubuntu@master:~/kube-prometheus$
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/489eaaaa-3d9f-40c1-805e-b4f2bc7ac815)
 ___
-Для доступа к интерфейсу изменим сетевую политику, для этого создадим ```grafana-service.yml````:
+Для доступа к интерфейсу изменим сетевую политику, для этого создадим ```grafana-service.yml```:
 
 <details>
-<summary>Установка Kube-prometheus</summary>
+<summary>grafana-service.yml</summary>
 
 
 ```
@@ -376,15 +376,42 @@ spec:
 </details>
 
 
-
-
-
-
-
-
-
-
+___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/acd8fb67-0ffb-45d4-be72-0beb17971121)
+___
+* [master](http://158.160.37.27:30001/)
+* [worker-1](http://51.250.7.161:30001/)
+* [worker-2](http://158.160.80.152:30001/)
+* [worker-3](http://158.160.144.193:30001/)
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/d34fe40b-deaf-454e-bc45-68977a6d1893)
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/3e7edae0-acb6-45fd-be50-4f98f16f14da)
+___
+*Пароль и логин по умолчанию*
+# Создание тестового приложения
+Создадим [репу](https://github.com/Dimarkle/nginx) в github. Скачаем его на локальную машину и заполним его  файлами, необходимыми для создания  Dockerfile.        Создадим  версию  нашего приложения v1.0 .
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/d69bb3af-0636-4d4f-9c61-4ff70af1725e)
+___
+Также создадим [репу](https://hub.docker.com/repository/docker/dima2885/diplom/general) в docker hub:
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f124b48b-5e3f-4a5d-8258-94e0b1e024ab)
+___
+Выполним сборку образа на основе Dockerfile 
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6eaa6216-6c07-4e74-962b-31950ae239f2)
+____
+
+Отправим созданный образ на DockerHub:
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/92564487-e746-4569-8a8e-9e36749bfc3c)
+___
+
+
+Проверяем:
+
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/484ce855-2d46-4f95-bc74-2e382b4a1522)
 
 
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/5acc2858-44dd-45a8-861a-5be377b0c961)
@@ -397,40 +424,15 @@ spec:
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6f7ae294-b4a2-45b8-9996-5e4f9fbc05f5)
 
 
-# Docker
-
-Загрузим версию 1.0 в гитхаб.
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/5acc2858-44dd-45a8-861a-5be377b0c961)
 
 
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/d69bb3af-0636-4d4f-9c61-4ff70af1725e)
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6c38cfb2-3b5b-414a-a7a5-40ce6d89630e)
 
-Создадим репу в докер хабе:
+Проверка
 
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/f124b48b-5e3f-4a5d-8258-94e0b1e024ab)
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6f7ae294-b4a2-45b8-9996-5e4f9fbc05f5)
 
-
-
-
-Выполним сборку образа на основе Dockerfile 
-
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/6eaa6216-6c07-4e74-962b-31950ae239f2)
-
-
-
-
-
-Отправим созданный образ на DockerHub:
-
-
-
-
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/92564487-e746-4569-8a8e-9e36749bfc3c)
-
-
-
-Проверяем:
-
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/484ce855-2d46-4f95-bc74-2e382b4a1522)
 
 
 # Подготовка системы мониторинга и деплой приложения
