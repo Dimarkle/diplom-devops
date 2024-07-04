@@ -24,7 +24,9 @@ ___
 ___
 * В файле [baket.tf](https://github.com/Dimarkle/diplom-devops/blob/main/terraform/baket.tf) создаем сервисный аккаунт и S3-bucket. Все работает:
 ___
-![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/68c9e33e-6d97-4792-ad0d-609a5556bcc4)
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/34b234b6-c5fd-4c81-b709-ebcae56e0644)
+___
+![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/e302ad24-d71e-4c56-b325-236bbec37ed5)
 ___
 ![image](https://github.com/Dimarkle/diplom-devops/assets/118626944/7dc33ee2-34b0-40b8-8ca7-fb685c5a59e0)
 ___
