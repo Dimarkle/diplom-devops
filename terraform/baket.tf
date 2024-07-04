@@ -56,13 +56,13 @@ resource "yandex_storage_bucket" "diman-diplom" {
   access_key = yandex_iam_service_account_static_access_key.bucket-static_access_key.access_key
   secret_key = yandex_iam_service_account_static_access_key.bucket-static_access_key.secret_key
   default_storage_class = "STANDARD"
-  acl           = "public-read"
+  acl           = "private"
   force_destroy = "true"
 
   anonymous_access_flags {
-    read = true
-    list = true
-    config_read = true
+    read = false
+    list = false
+    config_read = false
   }
   server_side_encryption_configuration {
     rule {
